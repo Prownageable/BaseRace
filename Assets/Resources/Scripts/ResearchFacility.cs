@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class enemySpawner : MonoBehaviour {
+public class ResearchFacility : Structure
+{
 	public GameObject[] enemy;
 	
 	

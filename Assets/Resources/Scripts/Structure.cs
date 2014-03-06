@@ -1,32 +1,36 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class health : MonoBehaviour
+public class Structure : MonoBehaviour
 {
+    public Team team;
+
     public float maxHp = 5;
-    private float curHp;
     public float armor = 3;
-    GameObject healthBar;
+
+    private GameObject healthBar;
+
+    private float curHp;
 
     // Use this for initialization
-    void Start()
+    internal void Start()
     {
         curHp = maxHp;
         healthBar = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        
+
         healthBar.renderer.material.color = Color.green;
         healthBar.transform.localScale = new Vector3(2f, 0.5f, 0.5f);
         healthBar.renderer.castShadows = false;
     }
 
     // Update is called once per frame
-    void Update()
+    internal void Update()
     {
-        healthBar.transform.position = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y + this.gameObject.renderer.bounds.size.y / 2 + 2, this.gameObject.transform.position.z);
+        healthBar.transform.position = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y * 2, this.gameObject.transform.position.z);
         healthBar.transform.localScale = new Vector3(2f * (curHp / maxHp), 0.5f, 0.5f);
     }
 
-    public void Damage(float d)
+    public void ReceiveDamage(float d)
     {
         float dmgPercentage = (10 - armor) / 10;
         if (dmgPercentage < 0.20f)
