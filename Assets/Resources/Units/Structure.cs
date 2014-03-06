@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Unit : MonoBehaviour
+public class Structure : MonoBehaviour
 {
-    public float dmg = 5f;
+    public float dmg = 0f;
     public float attackSpeed = 1.2f;
     public int team = 0;
-    public float speed = 5f;
     public float range = 5f;
     public float maxHp = 5;
     private float curHp;
@@ -51,7 +50,6 @@ public class Unit : MonoBehaviour
         }
         else
         {
-            Move();
             //speed = 5;
             //this.gameObject.GetComponent<move>().speed = 5;
             timer = 0.0f;
@@ -107,18 +105,6 @@ public class Unit : MonoBehaviour
         else
         {
             print("Geen unit");
-        }
-    }
-
-    private void Move()
-    {
-        if (this.gameObject.tag == "enemy")
-        {
-            transform.position -= new Vector3(1, 0, 0) * Time.deltaTime * speed;
-        }
-        else if (this.gameObject.tag == "friendly")
-        {
-            transform.position += new Vector3(1, 0, 0) * Time.deltaTime * speed;
         }
     }
 
