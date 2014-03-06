@@ -9,6 +9,7 @@ public class Unit : MonoBehaviour
     public float range = 5f;
     public float maxHp = 5;
     public float armor = 3;
+    public float spawnTime = 2;
 
     public Team team;
 

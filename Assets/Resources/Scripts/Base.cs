@@ -1,19 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Base : Structure
 {
+    //private GameObject[] spawnQueue;
+    private List<GameObject> spawnQueue = new List<GameObject>();
+
     public void SpawnSoldier()
     {
         for (int i = 0; i < ObjectPool.maxSoldiers; i++)
         {
             if (!ObjectPool.soldiers[i].activeSelf)
             {
-                GameObject unit = ObjectPool.soldiers[i];
-                unit.transform.position = new Vector3(this.transform.position.x, unit.gameObject.renderer.bounds.size.y / 2, this.transform.position.z);
-                unit.GetComponent<Unit>().team = team;
-                unit.GetComponent<Unit>().Start();
-                unit.SetActive(true);
+                GameObject unit = ObjectPool.soldiers[i];    
+                spawnQueue.Add(unit);
                 return;
             }
         }
@@ -25,10 +26,11 @@ public class Base : Structure
             if (!ObjectPool.siegeUnits[i].activeSelf)
             {
                 GameObject unit = ObjectPool.siegeUnits[i];
-                unit.transform.position = new Vector3(this.transform.position.x, unit.gameObject.renderer.bounds.size.y / 2, this.transform.position.z);
+                spawnQueue.Add(unit);
+                /*unit.transform.position = new Vector3(this.transform.position.x, unit.gameObject.renderer.bounds.size.y / 2, this.transform.position.z);
                 unit.GetComponent<Unit>().team = team;
                 unit.GetComponent<Unit>().Start();
-                unit.SetActive(true);
+                unit.SetActive(true);*/
                 return;
             }
         }
@@ -43,6 +45,21 @@ public class Base : Structure
     // Update is called once per frame
     void Update()
     {
+        print("Spawnqueue length: " + spawnQueue.Count);
+
+        for(int i=0; i<spawnQueue.Count; i++){
+            GameObject unit = spawnQueue[i];
+            unit.GetComponent<Unit>().spawnTime -= Time.deltaTime;
+            if (unit.GetComponent<Unit>().spawnTime <= 0)
+            {
+                unit.transform.position = new Vector3(this.transform.position.x, unit.gameObject.renderer.bounds.size.y / 2, this.transform.position.z);
+                unit.GetComponent<Unit>().team = team;
+                unit.GetComponent<Unit>().Start();
+                unit.SetActive(true);
+                spawnQueue.RemoveAt(i);
+            }
+        }
+
         base.Update();
     }
 }
