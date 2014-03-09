@@ -11,6 +11,8 @@ public class Unit : MonoBehaviour
     public float armor = 3;
     public float spawnTime = 2;
 
+    public const int cost = 5;
+
     public Team team;
 
     private GameObject target;
@@ -140,11 +142,11 @@ public class Unit : MonoBehaviour
             dmgPercentage = 0.20f;
         }
         curHp = curHp - (d * dmgPercentage);
+        // Unit dies!
         if (curHp <= 0)
         {
-            //ObjectPool.DeleteGameObject(this.gameObject);
+            ObjectPool.getEnemyTeam(team).currency += cost;
             gameObject.SetActive(false);
-            //Destroy(healthBar);
             return;
         }
 

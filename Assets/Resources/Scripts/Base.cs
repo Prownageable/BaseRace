@@ -13,12 +13,13 @@ public class Base : Structure
         {
             if (!ObjectPool.soldiers[i].activeSelf)
             {
-                GameObject unit = ObjectPool.soldiers[i];    
+                GameObject unit = ObjectPool.soldiers[i];
                 spawnQueue.Add(unit);
                 return;
             }
         }
     }
+
     public void SpawnSiege()
     {
         for (int i = 0; i < ObjectPool.maxSiegeUnits; i++)
@@ -47,7 +48,8 @@ public class Base : Structure
     {
         print("Spawnqueue length: " + spawnQueue.Count);
 
-        for(int i=0; i<spawnQueue.Count; i++){
+        for (int i = 0; i < spawnQueue.Count; i++)
+        {
             GameObject unit = spawnQueue[i];
             unit.GetComponent<Unit>().spawnTime -= Time.deltaTime;
             if (unit.GetComponent<Unit>().spawnTime <= 0)
