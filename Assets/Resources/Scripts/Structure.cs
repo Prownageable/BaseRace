@@ -16,17 +16,20 @@ public class Structure : MonoBehaviour
     internal void Start()
     {
         curHp = maxHp;
-        healthBar = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
-        healthBar.renderer.material.color = Color.green;
+        healthBar = transform.GetChild(1).gameObject;
         healthBar.transform.localScale = new Vector3(2f, 0.5f, 0.5f);
+        healthBar.renderer.material.color = Color.green;
         healthBar.renderer.castShadows = false;
+        healthBar.transform.position = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y + this.gameObject.renderer.bounds.size.y / 2 + 2, this.gameObject.transform.position.z);
+        healthBar.transform.localScale = new Vector3(2f * (curHp / maxHp), 0.5f, 0.5f);
+
     }
 
     // Update is called once per frame
     internal void Update()
     {
-        healthBar.transform.position = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y * 2, this.gameObject.transform.position.z);
+        healthBar.transform.position = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y + 20, this.gameObject.transform.position.z);
         healthBar.transform.localScale = new Vector3(2f * (curHp / maxHp), 0.5f, 0.5f);
     }
 

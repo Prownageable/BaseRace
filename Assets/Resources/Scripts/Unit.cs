@@ -105,6 +105,24 @@ public class Unit : MonoBehaviour
                 }
             }
         }
+        if (this.team == ObjectPool.base1.team)
+        {
+            if (Vector3.Distance(this.transform.position, ObjectPool.base2.transform.position) <= range)
+            {
+                // Enemy in range
+                target = ObjectPool.base2.gameObject;
+                enemyInRange = true;
+            }
+        }
+        else
+        {
+            if (Vector3.Distance(this.transform.position, ObjectPool.base1.transform.position) <= range)
+            {
+                // Enemy in range
+                target = ObjectPool.base1.gameObject;
+                enemyInRange = true;
+            }
+        }        
     }
 
     private void DealDamage(GameObject target, float d)
@@ -113,6 +131,10 @@ public class Unit : MonoBehaviour
         if (target.GetComponent<Unit>())
         {
             target.GetComponent<Unit>().ReceiveDamage(d);
+        }
+        else if(target.GetComponent<Structure>())
+        {
+            target.GetComponent<Structure>().ReceiveDamage(d);
         }
         else
         {
@@ -142,7 +164,7 @@ public class Unit : MonoBehaviour
             dmgPercentage = 0.20f;
         }
         curHp = curHp - (d * dmgPercentage);
-        // Unit dies!
+        // Unit dies! R.I.P.
         if (curHp <= 0)
         {
             ObjectPool.getEnemyTeam(team).currency += cost;

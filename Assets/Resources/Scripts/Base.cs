@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class Base : Structure
 {
-    //private GameObject[] spawnQueue;
     private List<GameObject> spawnQueue = new List<GameObject>();
 
     public void SpawnSoldier()
@@ -46,10 +45,10 @@ public class Base : Structure
     // Update is called once per frame
     void Update()
     {
-        print("Spawnqueue length: " + spawnQueue.Count);
+        //print("Spawnqueue length: " + spawnQueue.Count);
 
         for (int i = 0; i < spawnQueue.Count; i++)
-        {
+        {            
             GameObject unit = spawnQueue[i];
             unit.GetComponent<Unit>().spawnTime -= Time.deltaTime;
             if (unit.GetComponent<Unit>().spawnTime <= 0)
