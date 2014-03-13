@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Unit : MonoBehaviour
 {
@@ -61,7 +62,7 @@ public class Unit : MonoBehaviour
                 }
                 else
                 {
-                    print("Bad boyz");
+                    throw new Exception("Shit broke man!");
                 }
             }
             else
@@ -74,6 +75,10 @@ public class Unit : MonoBehaviour
         {
             Move();
             FindEnemy();
+        }
+        if (transform.position.y <= -10)
+        {
+            gameObject.SetActive(false);
         }
     }
 
@@ -146,11 +151,13 @@ public class Unit : MonoBehaviour
     {
         if (team.name == "Rik")
         {
-            transform.position -= new Vector3(1, 0, 0) * Time.deltaTime * speed;
+            //transform.position -= new Vector3(1, 0, 0) * Time.deltaTime * speed;
+            transform.position = Vector3.MoveTowards(transform.position, ObjectPool.getEnemyTeam(team).base_building.transform.position, Time.deltaTime * speed);
         }
         else
         {
-            transform.position += new Vector3(1, 0, 0) * Time.deltaTime * speed;
+            //transform.position += new Vector3(1, 0, 0) * Time.deltaTime * speed;
+            transform.position = Vector3.MoveTowards(transform.position, ObjectPool.getEnemyTeam(team).base_building.transform.position, Time.deltaTime * speed);
         }
     }
 

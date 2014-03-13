@@ -7,6 +7,7 @@ public class Soldier : Unit
     void Start()
     {
         base.Start();
+        this.name = "Motherfucking soldaat!";
     }
 
     // Update is called once per frame

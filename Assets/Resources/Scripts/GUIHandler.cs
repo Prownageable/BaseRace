@@ -7,7 +7,7 @@ public class GUIHandler : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        ObjectPool.Init();
     }
 
     // Update is called once per frame
@@ -19,8 +19,34 @@ public class GUIHandler : MonoBehaviour
     
     void OnGUI()
     {
-        GUI.contentColor = Color.green;
-        GUI.Label(new Rect(400, 25, 100, 25), ObjectPool.team1.name + ": $ " + ObjectPool.team1.currency);
-        GUI.Label(new Rect(400, 50, 100, 25), ObjectPool.team2.name + ": $ " + ObjectPool.team2.currency);
+        GUI.contentColor = Color.white;
+        //GUI.Label(new Rect(400, 25, 100, 25), ObjectPool.team1.name + ": $ " + ObjectPool.team1.currency);
+        //GUI.Label(new Rect(400, 50, 100, 25), ObjectPool.team2.name + ": $ " + ObjectPool.team2.currency);
+
+        // Team 1
+        GUI.Box(new Rect(Screen.width - 110, Screen.height - 100, 100, 90), ObjectPool.team1.name + " : $" + ObjectPool.team1.currency);
+
+        if (GUI.Button(new Rect(Screen.width - 100, Screen.height - 70, 80, 20), "Soldier"))
+        {
+            ObjectPool.team1.base_building.GetComponent<Base>().SpawnSoldier();
+        }
+
+        if (GUI.Button(new Rect(Screen.width - 100, Screen.height - 40, 80, 20), "Sieger"))
+        {
+            ObjectPool.team1.base_building.GetComponent<Base>().SpawnSiege();
+        }
+
+        // Team 2
+        GUI.Box(new Rect(10, Screen.height - 100, 100, 90), ObjectPool.team2.name + " : $" + ObjectPool.team2.currency);
+
+        if (GUI.Button(new Rect(20, Screen.height - 70, 80, 20), "Soldier"))
+        {
+            ObjectPool.team2.base_building.GetComponent<Base>().SpawnSoldier();
+        }
+
+        if (GUI.Button(new Rect(20, Screen.height - 40, 80, 20), "Sieger"))
+        {
+            ObjectPool.team2.base_building.GetComponent<Base>().SpawnSiege();
+        }
     }
 }

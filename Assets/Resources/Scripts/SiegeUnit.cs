@@ -7,6 +7,7 @@ public class SiegeUnit : Unit
     void Start()
     {
         base.Start();
+        this.name = "Siege fucking unit";
     }
 
     // Update is called once per frame
