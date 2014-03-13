@@ -1,20 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public static class ObjectPool
 {
     public const int maxSoldiers = 50;
     public const int maxSiegeUnits = 25;
 
-    public static GameObject[] soldiers = new GameObject[maxSoldiers];
-    public static GameObject[] siegeUnits = new GameObject[maxSoldiers];
+    public static GameObject[] soldiersTeam1 = new GameObject[maxSoldiers];
+    public static GameObject[] soldiersTeam2 = new GameObject[maxSoldiers];
+
+    public static GameObject[] siegeUnitsTeam1 = new GameObject[maxSoldiers];
+    public static GameObject[] siegeUnitsTeam2 = new GameObject[maxSoldiers];
 
     public static Base base1;
     public static Base base2;
 
     public static Team team1;
     public static Team team2;
-
 
     public static void Init()
     {
@@ -30,6 +33,7 @@ public static class ObjectPool
 
         for (int i = 0; i < maxSoldiers; i++)
         {
+<<<<<<< HEAD
             soldiers[i] = (GameObject) MonoBehaviour.Instantiate(soldier, new Vector3(0, 0, 0), Quaternion.identity);
             soldiers[i].SetActive(false);
             soldiers[i].transform.parent = soldierParent.transform;
@@ -39,6 +43,21 @@ public static class ObjectPool
             siegeUnits[i] = (GameObject)MonoBehaviour.Instantiate(siegeUnit, new Vector3(0, 0, 0), Quaternion.identity);
             siegeUnits[i].SetActive(false);
             siegeUnits[i].transform.parent = siegeParent.transform;
+=======
+            soldiersTeam1[i] = (GameObject)MonoBehaviour.Instantiate(soldier, new Vector3(100, -10, 0), Quaternion.identity);
+            soldiersTeam1[i].SetActive(false);
+
+            soldiersTeam2[i] = (GameObject)MonoBehaviour.Instantiate(soldier, new Vector3(-100, -10, 0), Quaternion.identity);
+            soldiersTeam2[i].SetActive(false);
+        }
+        for (int i = 0; i < maxSiegeUnits; i++)
+        {
+            siegeUnitsTeam1[i] = (GameObject)MonoBehaviour.Instantiate(siegeUnit, new Vector3(100, -10, 0), Quaternion.identity);
+            siegeUnitsTeam1[i].SetActive(false);
+
+            siegeUnitsTeam2[i] = (GameObject)MonoBehaviour.Instantiate(siegeUnit, new Vector3(-100, -10, 0), Quaternion.identity);
+            siegeUnitsTeam2[i].SetActive(false);
+>>>>>>> e61df6bb02d26fd23888b5fa5b861b0a0e3009d8
         }
 
         base1 = GameObject.Find("Base1").GetComponent<Base>();
@@ -64,5 +83,29 @@ public static class ObjectPool
             return team2;
         else
             return team1;
+    }
+
+    public static GameObject[] getEnemySoldiers(Team t)
+    {
+        if (t == team1)
+        {
+            return soldiersTeam2;
+        }
+        else
+        {
+            return soldiersTeam1;
+        }
+    }
+
+    public static GameObject[] getEnemySiegeUnits(Team t)
+    {
+        if (t == team1)
+        {
+            return siegeUnitsTeam2;
+        }
+        else
+        {
+            return siegeUnitsTeam1;
+        }
     }
 }

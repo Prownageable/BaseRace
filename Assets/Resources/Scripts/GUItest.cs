@@ -38,6 +38,31 @@ public class GUItest : MonoBehaviour
 
     void Update()
     {
+        CheckButtonPressed();
+    }
+
+    public void CheckButtonPressed()
+    {
+        if (Input.GetKeyDown("q"))
+        {
+            print("Spawn soldier team 2");
+            ObjectPool.base2.SpawnSoldier();
+        }
+        if (Input.GetKeyDown("w"))
+        {
+            print("Spawn siege team 2");
+            ObjectPool.base2.SpawnSiege();
+        }
+        if (Input.GetKeyDown("o"))
+        {
+            print("Spawn soldier team 1");
+            ObjectPool.base1.SpawnSoldier();
+        }
+        if (Input.GetKeyDown("p"))
+        {
+            print("Spawn siege team 1");
+            ObjectPool.base1.SpawnSiege();
+        }
     }
 }
 
