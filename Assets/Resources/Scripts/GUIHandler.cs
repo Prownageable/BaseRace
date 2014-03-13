@@ -25,12 +25,12 @@ public class GUIHandler : MonoBehaviour
         // Team 1
         GUI.Box(new Rect(Screen.width - 110, Screen.height - 100, 100, 90), ObjectPool.team1.name + " : $" + ObjectPool.team1.currency);
 
-        if (GUI.Button(new Rect(Screen.width - 100, Screen.height - 70, 80, 20), "Soldier"))
+        if (GUI.Button(new Rect(Screen.width - 100, Screen.height - 70, 80, 20), "Soldier") | Input.GetKeyDown(KeyCode.K))
         {
             ObjectPool.team1.base_building.GetComponent<Base>().SpawnSoldier();
         }
 
-        if (GUI.Button(new Rect(Screen.width - 100, Screen.height - 40, 80, 20), "Sieger"))
+        if (GUI.Button(new Rect(Screen.width - 100, Screen.height - 40, 80, 20), "Sieger") | Input.GetKeyDown(KeyCode.L))
         {
             ObjectPool.team1.base_building.GetComponent<Base>().SpawnSiege();
         }
@@ -38,12 +38,12 @@ public class GUIHandler : MonoBehaviour
         // Team 2
         GUI.Box(new Rect(10, Screen.height - 100, 100, 90), ObjectPool.team2.name + " : $" + ObjectPool.team2.currency);
 
-        if (GUI.Button(new Rect(20, Screen.height - 70, 80, 20), "Soldier"))
+        if (GUI.Button(new Rect(20, Screen.height - 70, 80, 20), "Soldier") | Input.GetKeyDown(KeyCode.A))
         {
             ObjectPool.team2.base_building.GetComponent<Base>().SpawnSoldier();
         }
 
-        if (GUI.Button(new Rect(20, Screen.height - 40, 80, 20), "Sieger"))
+        if (GUI.Button(new Rect(20, Screen.height - 40, 80, 20), "Sieger") | Input.GetKeyDown(KeyCode.S))
         {
             ObjectPool.team2.base_building.GetComponent<Base>().SpawnSiege();
         }

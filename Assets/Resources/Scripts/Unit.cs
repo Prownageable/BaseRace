@@ -23,6 +23,8 @@ public class Unit : MonoBehaviour
     public float timer = 0.0f;
     public float curHp;
 
+    private bool isQueued;
+
     // Use this for initialization
     internal void Start()
     {
@@ -192,5 +194,20 @@ public class Unit : MonoBehaviour
         }
 
         healthBar.transform.localScale = new Vector3(2f * (curHp / maxHp), 0.5f, 0.5f) / this.transform.localScale.x;
+    }
+
+    internal void AddToQueue()
+    {
+        isQueued = true;
+    }
+
+    internal void RemoveFromQueue()
+    {
+        isQueued = false;
+    }
+
+    internal bool IsQueued()
+    {
+        return isQueued;
     }
 }

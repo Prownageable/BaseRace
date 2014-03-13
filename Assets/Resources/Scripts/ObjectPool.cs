@@ -25,41 +25,6 @@ public static class ObjectPool
         Object soldier = Resources.Load("Prefabs/Units/Soldier");
         Object siegeUnit = Resources.Load("Prefabs/Units/Siege");
 
-        GameObject units = new GameObject("Units");
-        GameObject soldierParent = new GameObject("Soldiers");
-        GameObject siegeParent = new GameObject("Siege units");
-        soldierParent.transform.parent = units.transform;
-        siegeParent.transform.parent = units.transform;
-
-        for (int i = 0; i < maxSoldiers; i++)
-        {
-<<<<<<< HEAD
-            soldiers[i] = (GameObject) MonoBehaviour.Instantiate(soldier, new Vector3(0, 0, 0), Quaternion.identity);
-            soldiers[i].SetActive(false);
-            soldiers[i].transform.parent = soldierParent.transform;
-        }
-        for (int i = 0; i < maxSiegeUnits; i++)
-        {
-            siegeUnits[i] = (GameObject)MonoBehaviour.Instantiate(siegeUnit, new Vector3(0, 0, 0), Quaternion.identity);
-            siegeUnits[i].SetActive(false);
-            siegeUnits[i].transform.parent = siegeParent.transform;
-=======
-            soldiersTeam1[i] = (GameObject)MonoBehaviour.Instantiate(soldier, new Vector3(100, -10, 0), Quaternion.identity);
-            soldiersTeam1[i].SetActive(false);
-
-            soldiersTeam2[i] = (GameObject)MonoBehaviour.Instantiate(soldier, new Vector3(-100, -10, 0), Quaternion.identity);
-            soldiersTeam2[i].SetActive(false);
-        }
-        for (int i = 0; i < maxSiegeUnits; i++)
-        {
-            siegeUnitsTeam1[i] = (GameObject)MonoBehaviour.Instantiate(siegeUnit, new Vector3(100, -10, 0), Quaternion.identity);
-            siegeUnitsTeam1[i].SetActive(false);
-
-            siegeUnitsTeam2[i] = (GameObject)MonoBehaviour.Instantiate(siegeUnit, new Vector3(-100, -10, 0), Quaternion.identity);
-            siegeUnitsTeam2[i].SetActive(false);
->>>>>>> e61df6bb02d26fd23888b5fa5b861b0a0e3009d8
-        }
-
         base1 = GameObject.Find("Base1").GetComponent<Base>();
         base2 = GameObject.Find("Base2").GetComponent<Base>();
         team1 = new Team("Rik");
@@ -70,6 +35,38 @@ public static class ObjectPool
         team1.base_building = base1.gameObject;
         base2.team = team2;
         team2.base_building = base2.gameObject;
+        
+        GameObject team1Units = new GameObject("Units " + team1.name);
+        GameObject team2Units = new GameObject("Units " + team2.name);
+        GameObject soldiersTeam1Parent = new GameObject("Soldiers");
+        GameObject soldiersTeam2Parent = new GameObject("Soldiers");
+        GameObject siegeTeam1Parent = new GameObject("Siege units");
+        GameObject siegeTeam2Parent = new GameObject("Siege units");
+        soldiersTeam1Parent.transform.parent = team1Units.transform;
+        soldiersTeam2Parent.transform.parent = team2Units.transform;
+        siegeTeam1Parent.transform.parent = team1Units.transform;
+        siegeTeam2Parent.transform.parent = team2Units.transform.gameObject.transform;
+
+        for (int i = 0; i < maxSoldiers; i++)
+        {
+            soldiersTeam1[i] = (GameObject)MonoBehaviour.Instantiate(soldier, new Vector3(100, -10, 0), Quaternion.identity);
+            soldiersTeam1[i].transform.parent = soldiersTeam1Parent.transform;
+            soldiersTeam1[i].SetActive(false);
+
+            soldiersTeam2[i] = (GameObject)MonoBehaviour.Instantiate(soldier, new Vector3(-100, -10, 0), Quaternion.identity);
+            soldiersTeam2[i].transform.parent = soldiersTeam2Parent.transform;
+            soldiersTeam2[i].SetActive(false);
+        }
+        for (int i = 0; i < maxSiegeUnits; i++)
+        {
+            siegeUnitsTeam1[i] = (GameObject)MonoBehaviour.Instantiate(siegeUnit, new Vector3(100, -10, 0), Quaternion.identity);
+            siegeUnitsTeam1[i].transform.parent = siegeTeam1Parent.transform;
+            siegeUnitsTeam1[i].SetActive(false);
+
+            siegeUnitsTeam2[i] = (GameObject)MonoBehaviour.Instantiate(siegeUnit, new Vector3(-100, -10, 0), Quaternion.identity);
+            siegeUnitsTeam2[i].transform.parent = siegeTeam2Parent.transform;
+            siegeUnitsTeam2[i].SetActive(false);
+        }
     }
 
     public static void DeleteGameObject(GameObject go)

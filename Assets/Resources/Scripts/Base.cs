@@ -15,7 +15,7 @@ public class Base : Structure
             this.team.ReduceCurrency((int)unit.GetComponent<Unit>().cost);
             unit.GetComponent<Unit>().team = team;
             unit.GetComponent<Unit>().Start();
-            unit.SetActive(true);
+            unit.GetComponent<Unit>().AddToQueue();
             if (team == ObjectPool.base1.team)
             {
                 spawnQueueTeam1.Add(unit);
@@ -38,6 +38,8 @@ public class Base : Structure
                 if (unit.GetComponent<Unit>().spawnTime <= 0)
                 {
                     unit.transform.position = new Vector3(this.transform.position.x, unit.gameObject.renderer.bounds.size.y / 2, this.transform.position.z);
+                    unit.SetActive(true);
+                    unit.GetComponent<Unit>().RemoveFromQueue();
                     spawnQueueTeam1.RemoveAt(i);
                 }
             }
@@ -51,6 +53,7 @@ public class Base : Structure
                 if (unit.GetComponent<Unit>().spawnTime <= 0)
                 {
                     unit.transform.position = new Vector3(this.transform.position.x, unit.gameObject.renderer.bounds.size.y / 2, this.transform.position.z);
+                    unit.SetActive(true);
                     spawnQueueTeam2.RemoveAt(i);
                 }
             }
@@ -63,31 +66,21 @@ public class Base : Structure
         {
             if (team == ObjectPool.base1.team)
             {
-                if (!ObjectPool.soldiersTeam1[i].activeSelf)
+                if (!ObjectPool.soldiersTeam1[i].activeSelf && !ObjectPool.soldiersTeam1[i].GetComponent<Unit>().IsQueued())
                 {
                     GameObject unit = ObjectPool.soldiersTeam1[i];
                     CreateUnit(unit);
                     return;
                 }
             }
-            if (team == ObjectPool.base2.team)
+            else if (team == ObjectPool.base2.team)
             {
-<<<<<<< HEAD
-                GameObject unit = ObjectPool.soldiers[i];
-                unit.transform.position = new Vector3(this.transform.position.x, unit.gameObject.renderer.bounds.size.y / 2, this.transform.position.z);
-                unit.GetComponent<Unit>().team = team;
-                unit.GetComponent<Unit>().Start();
-                unit.SetActive(true);
-                //spawnQueue.Add(unit);
-                return;
-=======
-                if (!ObjectPool.soldiersTeam2[i].activeSelf)
+                if (!ObjectPool.soldiersTeam2[i].activeSelf && !ObjectPool.soldiersTeam2[i].GetComponent<Unit>().IsQueued())
                 {
                     GameObject unit = ObjectPool.soldiersTeam2[i];
                     CreateUnit(unit);
                     return;
                 }
->>>>>>> e61df6bb02d26fd23888b5fa5b861b0a0e3009d8
             }
         }
     }
@@ -98,15 +91,6 @@ public class Base : Structure
         {
             if (team == ObjectPool.base1.team)
             {
-<<<<<<< HEAD
-                GameObject unit = ObjectPool.siegeUnits[i];
-                unit.transform.position = new Vector3(this.transform.position.x, unit.gameObject.renderer.bounds.size.y / 2, this.transform.position.z);
-                unit.GetComponent<Unit>().team = team;
-                unit.GetComponent<Unit>().Start();
-                unit.SetActive(true);
-                //spawnQueue.Add(unit);
-                return;
-=======
                 if (!ObjectPool.siegeUnitsTeam1[i].activeSelf)
                 {
                     GameObject unit = ObjectPool.siegeUnitsTeam1[i];
@@ -114,7 +98,7 @@ public class Base : Structure
                     return;
                 }
             }
-            if (team == ObjectPool.base2.team)
+            else if (team == ObjectPool.base2.team)
             {
                 if (!ObjectPool.siegeUnitsTeam2[i].activeSelf)
                 {
@@ -122,7 +106,6 @@ public class Base : Structure
                     CreateUnit(unit);
                     return;
                 }
->>>>>>> e61df6bb02d26fd23888b5fa5b861b0a0e3009d8
             }
         }
     }
@@ -137,24 +120,8 @@ public class Base : Structure
     // Update is called once per frame
     void Update()
     {
-<<<<<<< HEAD
-        //for (int i = 0; i < spawnQueue.Count; i++)
-        //{
-        //    GameObject unit = spawnQueue[i];
-        //    unit.GetComponent<Unit>().spawnTime -= Time.deltaTime;
-        //    if (unit.GetComponent<Unit>().spawnTime <= 0)
-        //    {
-        //        unit.transform.position = new Vector3(this.transform.position.x, unit.gameObject.renderer.bounds.size.y / 2, this.transform.position.z);
-        //        unit.GetComponent<Unit>().team = team;
-        //        unit.GetComponent<Unit>().Start();
-        //        unit.SetActive(true);
-        //        spawnQueue.RemoveAt(i);
-        //    }
-        //}
-=======
         UpdateSpawnQueue();
         team.UpdateCurrency();
->>>>>>> e61df6bb02d26fd23888b5fa5b861b0a0e3009d8
         base.Update();
     }
 }
