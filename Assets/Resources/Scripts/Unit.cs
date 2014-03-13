@@ -11,7 +11,7 @@ public class Unit : MonoBehaviour
     public float armor = 3;
     public float spawnTime = 2;
 
-    public const int cost = 5;
+    public float cost = 5f;
 
     public Team team;
 
@@ -30,12 +30,14 @@ public class Unit : MonoBehaviour
         enemyInRange = false;
         target = null;
 
+        //float scalePercentage = (1 * this.transform.localScale.x);
+
         healthBar = transform.GetChild(0).gameObject;
         healthBar.transform.localScale = new Vector3(2f, 0.5f, 0.5f);
         healthBar.renderer.material.color = Color.green;
-        healthBar.renderer.castShadows = false;
+        healthBar.renderer.castShadows = false;        
         healthBar.transform.position = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y + this.gameObject.renderer.bounds.size.y / 2 + 2, this.gameObject.transform.position.z);
-        healthBar.transform.localScale = new Vector3(2f * (curHp / maxHp), 0.5f, 0.5f);
+        healthBar.transform.localScale = new Vector3(2f * (curHp / maxHp), 0.5f, 0.5f) / this.transform.localScale.x;
     }
 
     // Update is called once per frame
@@ -79,28 +81,30 @@ public class Unit : MonoBehaviour
 
     private void FindEnemy()
     {
+        GameObject[] enemySoldiers = ObjectPool.getEnemySoldiers(team);
         for (int i = 0; i < ObjectPool.maxSoldiers; i++)
         {
-            if (ObjectPool.soldiers[i].activeSelf && ObjectPool.soldiers[i].GetComponent<Unit>().team != team)
+            if (enemySoldiers[i].activeSelf && enemySoldiers[i].GetComponent<Unit>().team != team)
             {
                 // Found enemy soldier
-                if (Vector3.Distance(this.transform.position, ObjectPool.soldiers[i].transform.position) <= range)
+                if (Vector3.Distance(this.transform.position, enemySoldiers[i].transform.position) <= range)
                 {
                     // Enemy in range
-                    target = ObjectPool.soldiers[i];
+                    target = enemySoldiers[i];
                     enemyInRange = true;
                 }
             }
         }
+        GameObject[] enemySiegeUnits = ObjectPool.getEnemySiegeUnits(team);
         for (int i = 0; i < ObjectPool.maxSiegeUnits; i++)
         {
-            if (ObjectPool.siegeUnits[i].activeSelf && ObjectPool.siegeUnits[i].GetComponent<Unit>().team != team)
+            if (enemySiegeUnits[i].activeSelf && enemySiegeUnits[i].GetComponent<Unit>().team != team)
             {
                 // Found enemy siege unit
-                if (Vector3.Distance(this.transform.position, ObjectPool.siegeUnits[i].transform.position) <= range)
+                if (Vector3.Distance(this.transform.position, enemySiegeUnits[i].transform.position) <= range)
                 {
                     // Enemy in range
-                    target = ObjectPool.siegeUnits[i];
+                    target = enemySiegeUnits[i];
                     enemyInRange = true;
                 }
             }
@@ -156,8 +160,6 @@ public class Unit : MonoBehaviour
 
     public void ReceiveDamage(float d)
     {
-        healthBar.transform.localScale = new Vector3(2f * (curHp / maxHp), 0.5f, 0.5f);
-
         float dmgPercentage = (10 - armor) / 10;
         if (dmgPercentage < 0.20f)
         {
@@ -167,7 +169,7 @@ public class Unit : MonoBehaviour
         // Unit dies! R.I.P.
         if (curHp <= 0)
         {
-            ObjectPool.getEnemyTeam(team).currency += cost;
+            ObjectPool.getEnemyTeam(team).currency += (int)(cost * 1.25f);
             gameObject.SetActive(false);
             return;
         }
@@ -181,5 +183,7 @@ public class Unit : MonoBehaviour
         {
             healthBar.renderer.material.color = Color.red;
         }
+
+        healthBar.transform.localScale = new Vector3(2f * (curHp / maxHp), 0.5f, 0.5f) / this.transform.localScale.x;
     }
 }
