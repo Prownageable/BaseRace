@@ -23,9 +23,14 @@ public class Team
         this.rawCurrency = currency;
     }
 
-    public void ReduceCurrency(float cost)
+    public void ReduceCurrency(float amount)
     {
-        this.rawCurrency -= cost;
+        this.rawCurrency -= amount;
+    }
+
+    public void AddCurrency(float amount)
+    {
+        this.rawCurrency += amount;
     }
 
     public void UpdateCurrency()

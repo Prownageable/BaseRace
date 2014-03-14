@@ -99,6 +99,7 @@ public class Unit : MonoBehaviour
                     // Enemy in range
                     target = enemySoldiers[i];
                     enemyInRange = true;
+                    return;
                 }
             }
         }
@@ -113,6 +114,7 @@ public class Unit : MonoBehaviour
                     // Enemy in range
                     target = enemySiegeUnits[i];
                     enemyInRange = true;
+                    return;
                 }
             }
         }
@@ -123,6 +125,7 @@ public class Unit : MonoBehaviour
                 // Enemy in range
                 target = ObjectPool.base2.gameObject;
                 enemyInRange = true;
+                    return;
             }
         }
         else
@@ -132,6 +135,7 @@ public class Unit : MonoBehaviour
                 // Enemy in range
                 target = ObjectPool.base1.gameObject;
                 enemyInRange = true;
+                    return;
             }
         }        
     }
@@ -149,7 +153,7 @@ public class Unit : MonoBehaviour
         }
         else
         {
-            print("Geen unit");
+            throw new Exception("Geen unit");
         }
     }
 
@@ -178,7 +182,7 @@ public class Unit : MonoBehaviour
         // Unit dies! R.I.P.
         if (curHp <= 0)
         {
-            ObjectPool.getEnemyTeam(team).currency += (int)(cost * 1.25f);
+            ObjectPool.getEnemyTeam(team).AddCurrency(cost * 1.25f);
             gameObject.SetActive(false);
             return;
         }

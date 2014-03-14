@@ -12,6 +12,7 @@ public class Base : Structure
     {
         if (this.team.currency >= unit.GetComponent<Unit>().cost)
         {
+            Debug.Log("Buying unit " + unit.name + " currency from " + team.currency + " to " + (team.currency - unit.GetComponent<Unit>().cost));
             this.team.ReduceCurrency((int)unit.GetComponent<Unit>().cost);
             unit.GetComponent<Unit>().team = team;
             unit.GetComponent<Unit>().Start();
